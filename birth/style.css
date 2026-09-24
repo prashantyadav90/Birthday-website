@@ -1,0 +1,1865 @@
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Poppins", sans-serif;
+    background: #fff7fa;
+    color: #3b2430;
+    overflow-x: hidden;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   FLOATING HEARTS
+========================================================= */
+
+#heartsContainer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 100;
+}
+
+.floating-heart {
+    position: absolute;
+    bottom: -40px;
+    opacity: 0;
+    animation: floatingHeart linear forwards;
+}
+
+@keyframes floatingHeart {
+
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 0.8;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+
+/* =========================================================
+   OPENING SCREEN
+========================================================= */
+
+.opening-screen {
+    position: fixed;
+    inset: 0;
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 180, 210, 0.4),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(213, 167, 255, 0.35),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #fff0f5,
+            #fff9fc,
+            #f9efff
+        );
+
+    z-index: 1000;
+
+    transition:
+        opacity 0.8s ease,
+        transform 0.8s ease;
+}
+
+.opening-screen::before,
+.opening-screen::after {
+    content: "";
+    position: absolute;
+
+    width: 300px;
+    height: 300px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 105, 155, 0.12);
+
+    filter: blur(5px);
+
+    animation: floatingBlob 7s ease-in-out infinite;
+}
+
+.opening-screen::before {
+    top: -100px;
+    left: -100px;
+}
+
+.opening-screen::after {
+    bottom: -100px;
+    right: -100px;
+
+    animation-delay: 2s;
+}
+
+@keyframes floatingBlob {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(40px, 30px);
+    }
+}
+
+.opening-hide {
+    opacity: 0;
+    transform: scale(1.1);
+    pointer-events: none;
+}
+
+.opening-content {
+    position: relative;
+    z-index: 2;
+
+    width: min(90%, 600px);
+
+    text-align: center;
+
+    padding: 50px 30px;
+}
+
+.gift-animation {
+    font-size: 90px;
+
+    animation:
+        giftBounce 2s ease-in-out infinite,
+        giftGlow 2s ease-in-out infinite;
+
+    margin-bottom: 20px;
+}
+
+@keyframes giftBounce {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(-18px) rotate(3deg);
+    }
+}
+
+@keyframes giftGlow {
+
+    50% {
+        filter: drop-shadow(
+            0 0 25px rgba(255, 80, 140, 0.4)
+        );
+    }
+}
+
+.opening-small {
+    color: #b65c7b;
+    font-size: 14px;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.opening-content h1 {
+    font-family: "Dancing Script", cursive;
+    font-size: clamp(50px, 8vw, 85px);
+    color: #a73865;
+    line-height: 1.1;
+    margin-bottom: 18px;
+}
+
+.opening-content h1 span {
+    display: inline-block;
+
+    animation: heartbeat 1.5s infinite;
+}
+
+.opening-text {
+    color: #765563;
+    font-size: 16px;
+    margin-bottom: 30px;
+}
+
+.surprise-btn {
+    border: none;
+
+    padding: 15px 30px;
+
+    border-radius: 50px;
+
+    background: linear-gradient(
+        135deg,
+        #e85d91,
+        #b84c7c
+    );
+
+    color: white;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    box-shadow:
+        0 12px 30px rgba(184, 76, 124, 0.3);
+
+    transition: 0.3s ease;
+
+    animation: buttonPulse 2s infinite;
+}
+
+.surprise-btn:hover {
+    transform: translateY(-4px) scale(1.04);
+
+    box-shadow:
+        0 18px 35px rgba(184, 76, 124, 0.4);
+}
+
+@keyframes buttonPulse {
+
+    0%,
+    100% {
+        box-shadow:
+            0 12px 30px rgba(184, 76, 124, 0.3);
+    }
+
+    50% {
+        box-shadow:
+            0 12px 45px rgba(232, 93, 145, 0.55);
+    }
+}
+
+@keyframes heartbeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.2);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.hidden {
+    display: none;
+}
+
+
+/* =========================================================
+   HERO SECTION
+========================================================= */
+
+.hero-section {
+    min-height: 100vh;
+
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 80px 20px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            rgba(255, 176, 207, 0.35),
+            transparent 35%
+        ),
+        linear-gradient(
+            180deg,
+            #fff5f8,
+            #fffafd
+        );
+}
+
+.hero-section::before {
+    content: "";
+
+    position: absolute;
+
+    width: 450px;
+    height: 450px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(207, 82, 126, 0.15);
+
+    animation: rotateCircle 25s linear infinite;
+}
+
+.hero-section::after {
+    content: "";
+
+    position: absolute;
+
+    width: 650px;
+    height: 650px;
+
+    border-radius: 50%;
+
+    border: 1px dashed rgba(207, 82, 126, 0.12);
+
+    animation: rotateCircleReverse 35s linear infinite;
+}
+
+@keyframes rotateCircle {
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes rotateCircleReverse {
+
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+
+    max-width: 850px;
+}
+
+.hero-small {
+    color: #bb6380;
+
+    font-size: 15px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 15px;
+}
+
+.hero-content h1 {
+    font-family: "Dancing Script", cursive;
+
+    font-size: clamp(55px, 9vw, 105px);
+
+    line-height: 0.95;
+
+    color: #9e315d;
+
+    margin-bottom: 30px;
+}
+
+.hero-content h1 span {
+    font-size: 0.72em;
+    color: #c4557e;
+}
+
+.birthday-cake {
+    font-size: 75px;
+
+    margin: 20px 0;
+
+    animation:
+        cakeFloat 3s ease-in-out infinite;
+}
+
+@keyframes cakeFloat {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.hero-message {
+    max-width: 600px;
+
+    margin: auto;
+
+    color: #765563;
+
+    line-height: 1.8;
+
+    font-size: 16px;
+}
+
+.scroll-indicator {
+    margin-top: 50px;
+
+    color: #bb6380;
+
+    font-size: 12px;
+
+    opacity: 0.8;
+}
+
+.scroll-indicator div {
+    font-size: 25px;
+
+    animation: arrowDown 1.5s infinite;
+}
+
+@keyframes arrowDown {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+
+/* =========================================================
+   PHOTOS SECTION
+========================================================= */
+
+.photos-section {
+    padding: 120px 20px;
+
+    background: #fff;
+}
+
+.section-title {
+    text-align: center;
+
+    margin-bottom: 25px;
+}
+
+.section-title p {
+    color: #bd6885;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+.section-title h2 {
+    font-family: "Dancing Script", cursive;
+
+    font-size: clamp(45px, 6vw, 70px);
+
+    color: #9e315d;
+}
+
+.photo-grid {
+    width: min(1100px, 100%);
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 25px;
+
+    align-items: start;
+}
+
+.photo-card {
+    background: white;
+
+    padding: 10px 10px 18px;
+
+    border-radius: 4px;
+
+    box-shadow:
+        0 12px 35px rgba(91, 38, 59, 0.12);
+
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease;
+}
+
+.photo-card:nth-child(even) {
+    margin-top: 35px;
+}
+
+.photo-card:hover {
+    transform:
+        translateY(-12px)
+        rotate(0deg)
+        scale(1.02);
+
+    box-shadow:
+        0 20px 45px rgba(91, 38, 59, 0.2);
+}
+
+.photo-wrapper {
+    width: 100%;
+    height: 300px;
+
+    overflow: hidden;
+
+    background: #f9e8ef;
+}
+
+.photo-wrapper img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition: transform 0.6s ease;
+}
+
+.photo-card:hover img {
+    transform: scale(1.08);
+}
+
+.photo-card p {
+    font-family: "Dancing Script", cursive;
+
+    text-align: center;
+
+    color: #a64a6e;
+
+    font-size: 21px;
+
+    margin-top: 12px;
+}
+
+
+/* =========================================================
+   MESSAGE SECTION
+========================================================= */
+
+.message-section {
+    padding: 120px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff1f6,
+            #fff9fc
+        );
+}
+
+.message-container {
+    width: min(850px, 100%);
+
+    margin: auto;
+
+    padding: 70px 60px;
+
+    text-align: center;
+
+    background: rgba(255, 255, 255, 0.75);
+
+    border:
+        1px solid rgba(210, 99, 140, 0.15);
+
+    border-radius: 35px;
+
+    box-shadow:
+        0 25px 70px rgba(115, 45, 75, 0.1);
+
+    backdrop-filter: blur(10px);
+}
+
+.message-icon {
+    font-size: 55px;
+
+    margin-bottom: 15px;
+
+    animation: envelopeFloat 3s infinite;
+}
+
+@keyframes envelopeFloat {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-3deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(3deg);
+    }
+}
+
+.message-label {
+    color: #bd6885;
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+.message-container h2 {
+    font-family: "Dancing Script", cursive;
+
+    font-size: clamp(45px, 6vw, 65px);
+
+    color: #9e315d;
+
+    margin-bottom: 35px;
+}
+
+.love-message {
+    color: #694d59;
+
+    font-size: 16px;
+
+    line-height: 2;
+
+    text-align: center;
+}
+
+.love-message p {
+    margin-bottom: 20px;
+}
+
+.love-message .special-line {
+    font-family: "Dancing Script", cursive;
+
+    font-size: 30px;
+
+    color: #b13e68;
+
+    margin-top: 30px;
+}
+
+
+/* =========================================================
+   SURPRISE MESSAGE
+========================================================= */
+
+.surprise-message-section {
+    padding: 80px 20px;
+
+    background: #fff;
+}
+
+.surprise-card {
+    text-align: center;
+
+    max-width: 600px;
+
+    margin: auto;
+}
+
+.sparkle {
+    font-size: 45px;
+
+    animation: sparkle 1.8s infinite;
+}
+
+@keyframes sparkle {
+
+    0%,
+    100% {
+        transform: scale(1)
+                   rotate(0deg);
+    }
+
+    50% {
+        transform: scale(1.25)
+                   rotate(15deg);
+    }
+}
+
+.surprise-card h2 {
+    font-family: "Dancing Script", cursive;
+
+    color: #a63862;
+
+    font-size: 60px;
+
+    margin: 10px 0;
+}
+
+.surprise-card p {
+    color: #765563;
+
+    font-size: 15px;
+}
+
+.down-arrow {
+    color: #c45c82;
+
+    font-size: 30px;
+
+    margin-top: 25px;
+
+    animation: arrowDown 1.5s infinite;
+}
+
+
+/* =========================================================
+   DATE SECTION
+========================================================= */
+
+.date-section {
+    position: relative;
+
+    min-height: 100vh;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 80px 20px;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 183, 211, 0.45),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(212, 174, 255, 0.3),
+            transparent 30%
+        ),
+        #fff6fa;
+}
+
+.date-card {
+    position: relative;
+
+    width: min(700px, 100%);
+
+    min-height: 500px;
+
+    padding: 70px 40px;
+
+    text-align: center;
+
+    border-radius: 40px;
+
+    background:
+        rgba(255, 255, 255, 0.8);
+
+    border:
+        1px solid rgba(194, 83, 128, 0.15);
+
+    box-shadow:
+        0 30px 80px rgba(113, 47, 76, 0.15);
+
+    backdrop-filter: blur(15px);
+
+    overflow: hidden;
+}
+
+.date-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 173, 205, 0.15);
+
+    top: -120px;
+    left: -120px;
+}
+
+.date-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 250px;
+    height: 250px;
+
+    border-radius: 50%;
+
+    background: rgba(208, 169, 255, 0.13);
+
+    bottom: -120px;
+    right: -120px;
+}
+
+.rose-icon {
+    font-size: 60px;
+
+    animation: roseFloat 3s infinite;
+}
+
+@keyframes roseFloat {
+
+    0%,
+    100% {
+        transform: rotate(-5deg)
+                   translateY(0);
+    }
+
+    50% {
+        transform: rotate(5deg)
+                   translateY(-10px);
+    }
+}
+
+.date-label {
+    color: #bd6885;
+
+    font-size: 13px;
+
+    letter-spacing: 2px;
+
+    margin: 15px 0;
+}
+
+.date-card h2 {
+    position: relative;
+    z-index: 2;
+
+    font-family: "Dancing Script", cursive;
+
+    color: #9d315c;
+
+    font-size: clamp(45px, 7vw, 75px);
+
+    line-height: 1;
+
+    margin-bottom: 20px;
+}
+
+.date-card h2 span {
+    display: inline-block;
+
+    animation: heartbeat 1.5s infinite;
+}
+
+.date-description {
+    position: relative;
+    z-index: 2;
+
+    color: #795865;
+
+    font-size: 15px;
+
+    margin-bottom: 45px;
+}
+
+
+/* =========================================================
+   DATE BUTTONS
+========================================================= */
+
+.date-buttons {
+    position: relative;
+
+    width: 100%;
+
+    height: 90px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    z-index: 5;
+}
+
+.yes-button,
+.no-button {
+    width: 145px;
+
+    padding: 15px 20px;
+
+    border-radius: 50px;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.yes-button {
+    position: relative;
+
+    z-index: 5;
+
+    border: none;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e55d8e,
+            #b73f6d
+        );
+
+    box-shadow:
+        0 10px 25px rgba(183, 63, 109, 0.3);
+}
+
+.yes-button:hover {
+    transform: translateY(-4px) scale(1.05);
+
+    box-shadow:
+        0 15px 35px rgba(183, 63, 109, 0.4);
+}
+
+.no-button {
+    position: relative;
+
+    z-index: 4;
+
+    border:
+        1px solid #e5a5bb;
+
+    color: #a04b6b;
+
+    background: white;
+}
+
+.no-button:hover {
+    background: #fff5f8;
+}
+
+.no-message {
+    position: relative;
+
+    z-index: 10;
+
+    min-height: 25px;
+
+    color: #b13e68;
+
+    font-family: "Dancing Script", cursive;
+
+    font-size: 23px;
+
+    margin-top: 15px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer {
+    padding: 45px 20px;
+
+    text-align: center;
+
+    background: #4d2737;
+
+    color: white;
+}
+
+footer p {
+    font-family: "Dancing Script", cursive;
+
+    font-size: 25px;
+
+    margin-bottom: 8px;
+}
+
+footer span {
+    font-size: 12px;
+
+    color: #e7bdcc;
+}
+
+
+/* =========================================================
+   CALENDAR OVERLAY
+========================================================= */
+
+.calendar-overlay,
+.success-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 20px;
+
+    background:
+        rgba(46, 18, 30, 0.65);
+
+    backdrop-filter: blur(8px);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.35s ease,
+        visibility 0.35s ease;
+
+    z-index: 2000;
+}
+
+.calendar-overlay.show,
+.success-overlay.show {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.calendar-modal,
+.success-modal {
+    position: relative;
+
+    width: min(500px, 100%);
+
+    padding: 45px 35px;
+
+    text-align: center;
+
+    border-radius: 30px;
+
+    background: white;
+
+    box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.25);
+
+    transform: translateY(30px)
+               scale(0.95);
+
+    transition:
+        transform 0.4s ease;
+}
+
+.calendar-overlay.show
+.calendar-modal,
+.success-overlay.show
+.success-modal {
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+.close-button {
+    position: absolute;
+
+    top: 15px;
+    right: 18px;
+
+    width: 38px;
+    height: 38px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #fff0f4;
+
+    color: #a43e64;
+
+    font-size: 25px;
+
+    line-height: 1;
+}
+
+.calendar-icon {
+    font-size: 55px;
+
+    margin-bottom: 15px;
+}
+
+.calendar-modal h2,
+.success-modal h2 {
+    font-family: "Dancing Script", cursive;
+
+    color: #9e315d;
+
+    font-size: 40px;
+
+    margin-bottom: 10px;
+}
+
+.calendar-modal > p {
+    color: #765563;
+
+    font-size: 14px;
+
+    margin-bottom: 25px;
+}
+
+.date-picker {
+    width: 100%;
+
+    padding: 15px;
+
+    border:
+        1px solid #e4b4c5;
+
+    border-radius: 15px;
+
+    outline: none;
+
+    color: #633f4d;
+
+    font-size: 15px;
+
+    background: #fffafd;
+
+    margin-bottom: 10px;
+}
+
+.date-picker:focus {
+    border-color: #c6577e;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(198, 87, 126, 0.1);
+}
+
+.calendar-error {
+    min-height: 22px;
+
+    color: #c44970;
+
+    font-size: 13px;
+}
+
+.confirm-date-button {
+    width: 100%;
+
+    border: none;
+
+    border-radius: 50px;
+
+    padding: 15px;
+
+    margin-top: 10px;
+
+    color: white;
+
+    font-weight: 600;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e35b8c,
+            #b53e6c
+        );
+
+    box-shadow:
+        0 10px 25px rgba(181, 62, 108, 0.25);
+
+    transition: 0.3s;
+}
+
+.confirm-date-button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 15px 30px rgba(181, 62, 108, 0.35);
+}
+
+
+/* =========================================================
+   SUCCESS MODAL
+========================================================= */
+
+.success-heart {
+    font-size: 70px;
+
+    animation:
+        heartbeat 1.4s infinite;
+}
+
+.success-modal h2 {
+    font-size: 55px;
+}
+
+.success-modal > p {
+    color: #765563;
+
+    font-size: 14px;
+
+    margin: 10px 0;
+}
+
+.selected-date {
+    display: inline-block;
+
+    margin: 10px 0 20px;
+
+    padding: 12px 25px;
+
+    border-radius: 50px;
+
+    background: #fff0f5;
+
+    color: #a43e64;
+
+    font-weight: 600;
+}
+
+.success-message {
+    line-height: 1.7;
+}
+
+.whatsapp-button {
+    display: block;
+
+    width: 100%;
+
+    padding: 15px;
+
+    margin-top: 20px;
+
+    border-radius: 50px;
+
+    color: white;
+
+    font-weight: 600;
+
+    background:
+        linear-gradient(
+            135deg,
+            #35b875,
+            #168d55
+        );
+
+    transition: 0.3s;
+}
+
+.whatsapp-button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 25px rgba(35, 150, 91, 0.25);
+}
+
+.close-success-button {
+    border: none;
+
+    background: transparent;
+
+    color: #a43e64;
+
+    margin-top: 18px;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   DESKTOP ENHANCEMENTS
+========================================================= */
+
+@media (min-width: 1200px) {
+
+    .hero-section {
+        min-height: 100vh;
+    }
+
+    .photo-grid {
+        gap: 30px;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .photo-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .photo-card:nth-child(even) {
+        margin-top: 0;
+    }
+
+    .photo-wrapper {
+        height: 350px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    .opening-content {
+        padding: 30px 20px;
+    }
+
+    .gift-animation {
+        font-size: 70px;
+    }
+
+    .opening-content h1 {
+        font-size: 58px;
+    }
+
+    .opening-small {
+        font-size: 12px;
+    }
+
+    .opening-text {
+        font-size: 14px;
+    }
+
+
+    /* HERO */
+
+    .hero-section {
+        min-height: 100svh;
+
+        padding:
+            70px 18px;
+    }
+
+    .hero-content h1 {
+        font-size: 65px;
+
+        line-height: 0.95;
+    }
+
+    .hero-content h1 span {
+        font-size: 0.7em;
+    }
+
+    .birthday-cake {
+        font-size: 60px;
+    }
+
+    .hero-message {
+        font-size: 14px;
+
+        line-height: 1.7;
+    }
+
+    .hero-section::before {
+        width: 280px;
+        height: 280px;
+    }
+
+    .hero-section::after {
+        width: 400px;
+        height: 400px;
+    }
+
+
+    /* PHOTOS */
+
+    .photos-section {
+        padding:
+            80px 15px;
+    }
+
+    .section-title {
+        margin-bottom: 40px;
+    }
+
+    .section-title h2 {
+        font-size: 50px;
+    }
+
+    .photo-grid {
+        grid-template-columns: 1fr;
+
+        gap: 25px;
+    }
+
+    .photo-card:nth-child(even) {
+        margin-top: 0;
+    }
+
+    .photo-wrapper {
+        height: 400px;
+    }
+
+
+    /* MESSAGE */
+
+    .message-section {
+        padding:
+            80px 15px;
+    }
+
+    .message-container {
+        padding:
+            50px 25px;
+
+        border-radius: 25px;
+    }
+
+    .message-container h2 {
+        font-size: 50px;
+    }
+
+    .love-message {
+        font-size: 14px;
+
+        line-height: 1.9;
+    }
+
+
+    /* SURPRISE */
+
+    .surprise-message-section {
+        padding:
+            70px 20px;
+    }
+
+    .surprise-card h2 {
+        font-size: 50px;
+    }
+
+
+    /* DATE */
+
+    .date-section {
+        min-height: 100svh;
+
+        padding:
+            50px 15px;
+    }
+
+    .date-card {
+        min-height: 500px;
+
+        padding:
+            55px 20px;
+
+        border-radius: 30px;
+    }
+
+    .rose-icon {
+        font-size: 50px;
+    }
+
+    .date-card h2 {
+        font-size: 52px;
+    }
+
+    .date-description {
+        font-size: 13px;
+
+        margin-bottom: 35px;
+    }
+
+    .date-buttons {
+        height: 120px;
+    }
+
+    .yes-button,
+    .no-button {
+        width: 125px;
+
+        padding:
+            13px 15px;
+
+        font-size: 13px;
+    }
+
+
+    /* CALENDAR */
+
+    .calendar-modal,
+    .success-modal {
+        padding:
+            40px 22px;
+
+        border-radius: 25px;
+    }
+
+    .calendar-modal h2 {
+        font-size: 35px;
+    }
+
+    .success-modal h2 {
+        font-size: 48px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .opening-content h1 {
+        font-size: 50px;
+    }
+
+    .hero-content h1 {
+        font-size: 55px;
+    }
+
+    .date-card h2 {
+        font-size: 45px;
+    }
+
+    .yes-button,
+    .no-button {
+        width: 110px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+
+/* =========================================================
+   PHOTO JOURNAL FINISH
+========================================================= */
+
+:root {
+    --ink: #30242a;
+    --muted-ink: #725d65;
+    --wine: #8f3f56;
+    --rose: #c66d7d;
+    --paper: #fffdf9;
+    --blush: #f8e9e6;
+    --line: rgba(112, 62, 75, 0.16);
+}
+
+body {
+    font-family: "DM Sans", sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.opening-screen {
+    background:
+        linear-gradient(120deg, rgba(255, 252, 246, 0.96), rgba(249, 229, 226, 0.9)),
+        url("images/img3.jpeg") center / cover;
+}
+
+.opening-screen::before,
+.opening-screen::after {
+    width: 420px;
+    height: 420px;
+    border: 1px solid rgba(143, 63, 86, 0.18);
+    background: transparent;
+    filter: none;
+}
+
+.opening-content {
+    width: min(92%, 680px);
+    padding: 58px 38px;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    background: rgba(255, 253, 249, 0.68);
+    box-shadow: 0 30px 80px rgba(84, 43, 54, 0.12);
+    backdrop-filter: blur(12px);
+}
+
+.gift-animation {
+    font-size: 76px;
+}
+
+.opening-small,
+.hero-small,
+.section-title p,
+.message-label,
+.date-label {
+    color: var(--rose);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.opening-content h1,
+.hero-content h1,
+.section-title h2,
+.message-container h2,
+.surprise-card h2,
+.date-card h2,
+.calendar-modal h2,
+.success-modal h2,
+.photo-card p,
+.love-message .special-line,
+footer p {
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+}
+
+.opening-content h1 {
+    color: var(--wine);
+    font-size: clamp(62px, 9vw, 104px);
+}
+
+.opening-content h1 span {
+    color: var(--rose);
+}
+
+.opening-text,
+.hero-message,
+.photo-card p,
+.love-message,
+.date-description,
+.surprise-card p {
+    color: var(--muted-ink);
+}
+
+.surprise-btn,
+.yes-button,
+.confirm-date-button {
+    border-radius: 8px;
+    background: var(--wine);
+    box-shadow: 0 12px 28px rgba(143, 63, 86, 0.24);
+}
+
+.surprise-btn:hover,
+.yes-button:hover,
+.confirm-date-button:hover {
+    background: #713044;
+}
+
+.hero-section {
+    min-height: 92vh;
+    background:
+        linear-gradient(180deg, rgba(255, 249, 246, 0.7), rgba(255, 253, 249, 0.96)),
+    url("images/img3.jpeg") center 35% / cover;
+}
+
+.hero-section::before,
+.hero-section::after {
+    border-color: rgba(143, 63, 86, 0.22);
+}
+
+.hero-content h1 {
+    color: var(--wine);
+    font-size: clamp(68px, 10vw, 126px);
+}
+
+.hero-content h1 span {
+    color: var(--rose);
+}
+
+.birthday-cake {
+    filter: drop-shadow(0 12px 12px rgba(143, 63, 86, 0.16));
+}
+
+.photos-section,
+.surprise-message-section {
+    background: var(--paper);
+}
+
+.photos-section {
+    padding-top: 105px;
+    padding-bottom: 125px;
+}
+
+.section-title h2,
+.message-container h2,
+.surprise-card h2,
+.date-card h2 {
+    color: var(--wine);
+}
+
+.photo-grid {
+    gap: 34px;
+}
+
+.photo-card {
+    padding: 12px 12px 20px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: #fff;
+    box-shadow: 0 18px 42px rgba(74, 42, 49, 0.13);
+}
+
+.photo-card:nth-child(odd) {
+    transform: rotate(-1.2deg);
+}
+
+.photo-card:nth-child(even) {
+    transform: rotate(1.2deg) translateY(35px);
+}
+
+.photo-card:hover,
+.photo-card:nth-child(even):hover {
+    transform: translateY(-12px) rotate(0) scale(1.02);
+}
+
+.photo-wrapper {
+    background: var(--blush);
+}
+
+.photo-card p {
+    color: var(--wine);
+    font-size: 25px;
+}
+
+.message-section {
+    padding: 125px 20px;
+    background: var(--blush);
+}
+
+.message-container {
+    padding: 76px 70px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    background: var(--paper);
+    box-shadow: 14px 14px 0 rgba(143, 63, 86, 0.08);
+    backdrop-filter: none;
+}
+
+.love-message .special-line {
+    color: var(--wine);
+}
+
+.date-section {
+    background:
+        linear-gradient(120deg, rgba(255, 247, 243, 0.91), rgba(247, 229, 226, 0.84)),
+        url("images/img4.jpeg") center / cover;
+}
+
+.date-card {
+    min-height: 520px;
+    border: 1px solid rgba(112, 62, 75, 0.2);
+    border-radius: 2px;
+    background: rgba(255, 253, 249, 0.86);
+    box-shadow: 16px 16px 0 rgba(143, 63, 86, 0.1);
+    backdrop-filter: blur(9px);
+}
+
+.date-card::before,
+.date-card::after {
+    border-radius: 0;
+    background: transparent;
+    border: 1px solid rgba(143, 63, 86, 0.1);
+}
+
+.no-button {
+    border-radius: 8px;
+    border-color: rgba(143, 63, 86, 0.35);
+    color: var(--wine);
+}
+
+footer {
+    background: var(--ink);
+}
+
+.calendar-modal,
+.success-modal {
+    border-radius: 2px;
+}
+
+@media (max-width: 600px) {
+    .opening-content {
+        padding: 42px 22px;
+    }
+
+    .hero-section {
+        min-height: 100svh;
+    }
+
+    .photo-card:nth-child(odd),
+    .photo-card:nth-child(even) {
+        transform: none;
+    }
+
+    .message-container {
+        padding: 52px 25px;
+        box-shadow: 8px 8px 0 rgba(143, 63, 86, 0.08);
+    }
+}
+
